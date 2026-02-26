@@ -94,7 +94,7 @@ accelerate launch train_dreambooth_lora.py \
   --report_to="tensorboard"
 ```
 
-## Results
+## ![Results](https://img.shields.io/badge/Results-8A2BE2?style=for-the-badge&logo=googleanalytics&logoColor=white)
 
 ### Early GAN Outputs
 ![Early GAN Output](https://github.com/user-attachments/assets/ef6fd094-d43e-471f-b179-989f79cdc9c2)
