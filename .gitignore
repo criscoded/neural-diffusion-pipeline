@@ -1,0 +1,15 @@
+# Datasets
+pokemon_jpg/
+
+# Model Weights and Artifacts
+pokemon_lora/
+pokemon_lora_output/
+
+# External Libraries / Environments
+diffusers/
+*.env
+venv/
+__pycache__/
+
+# OS Generated
+.DS_Store
