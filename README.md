@@ -94,6 +94,42 @@ accelerate launch train_dreambooth_lora.py \
   --report_to="tensorboard"
 ```
 
+## Results
+
+### Early GAN Outputs
+![Early GAN Output](https://github.com/user-attachments/assets/ef6fd094-d43e-471f-b179-989f79cdc9c2)
+![Early GAN Output 2](https://github.com/user-attachments/assets/d5b5bfaf-182f-42ec-bd3b-ab4864b39496)
+
+### DCGAN Iterations
+![DCGAN Version Comparison](https://github.com/user-attachments/assets/41f4e773-4fd6-48a8-be87-1f0b448a8376)
+![DCGAN Generation Sample](https://github.com/user-attachments/assets/97566044-b2d1-4583-8030-33d965d1e942)
+
+### Stable Diffusion (DreamBooth + LoRA)
+![Stable Diffusion Training Steps Comparison](https://github.com/user-attachments/assets/b934d7cf-f3f5-4ed8-a413-d39f36424559)
+
+GAN and DCGAN Performance
+Throughout the project, multiple iterations of GAN architectures were evaluated for synthesizing Pokémon-style images. The foundational vanilla GAN served as a baseline but struggled significantly with stability and resolution, frequently exhibiting mode collapse, blurry results, and a failure to capture coherent shapes.
+
+Transitioning to a Deep Convolutional GAN (DCGAN) noticeably improved the structure and quality of the generated images over the vanilla GAN. To optimize the DCGAN, the architecture was trained through three distinct iterations:
+
+* Version 1: A basic DCGAN implementation lacking stabilization techniques. While initial training showed progress, the model failed to produce usable images, resulting in plain outputs.
+
+* Version 2: Introduced stabilization methods including label smoothing for real samples, noise injection into real images, and a slower discriminator learning rate. These changes delayed mode collapse and stabilized training dynamics; however, extended training ultimately led to a loss of diversity, with images degrading into colored blobs around epoch 700.
+
+* Version 3: Applied a comprehensive stabilization strategy by injecting noise into both real and fake images, further lowering the generator learning rate, and implementing early stopping with periodic checkpointing. This version successfully avoided severe mode collapse, yielding generated images that retained significantly more visual diversity and structure.
+
+Despite the architectural improvements in Version 3, the DCGAN models remained limited to lower resolutions (typically 64x64 or 128x128) and lacked the fine anatomical detail required for high-quality generation.
+
+**Stable Diffusion Performance**
+To address the limitations of the adversarial models, a Stable Diffusion v1.5 model was fine-tuned using DreamBooth and Low-Rank Adaptation (LoRA). This approach yielded significantly more detailed and coherent images.
+
+* Visual Fidelity and Control: The diffusion model successfully synthesized realistic, Pokémon-inspired creatures at a high resolution of 512x512. Image sharpness and structural coherence improved noticeably across training checkpoints. Furthermore, the model provided highly customizable, prompt-driven generation capabilities guided by specific fine-tuned tokens.
+
+* Observed Limitations: The model's outputs heavily favored Pikachu-like features, reflecting a class imbalance in the training dataset. Additionally, some generations—particularly early in training or when given ambiguous prompts—exhibited object fusion artifacts where Pokémon were blended with unrelated shapes.
+
+**Conclusion** 
+While the GAN-based models offered faster training times and conceptual simplicity, they ultimately lacked the expressive power and controllability required for the task. The Stable Diffusion model, enhanced by DreamBooth and LoRA, allowed for the specialization of a general-purpose generator without retraining from scratch. It proved to be the most effective solution, serving as the clear winner in terms of visual fidelity, adaptability, and high-quality personalized image generation.
+
 ## 🔮 Future Roadmap
 
 * Advanced Prompting: Integrate retrieval-augmented prompts to further enhance generation diversity.
